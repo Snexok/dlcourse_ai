@@ -1,3 +1,5 @@
+import numpy as np
+
 def binary_classification_metrics(prediction, ground_truth):
     '''
     Computes metrics for binary classification
@@ -14,10 +16,15 @@ def binary_classification_metrics(prediction, ground_truth):
     accuracy = 0
     f1 = 0
 
-    # TODO: implement metrics!
-    # Some helpful links:
-    # https://en.wikipedia.org/wiki/Precision_and_recall
-    # https://en.wikipedia.org/wiki/F1_score
+    tp = np.isin(np.argwhere(prediction == True),  np.argwhere(ground_truth == True)).sum()
+    tn = np.isin(np.argwhere(prediction == False), np.argwhere(ground_truth == False)).sum()
+    fp = np.isin(np.argwhere(prediction == True),  np.argwhere(ground_truth == False)).sum()
+    fn = np.isin(np.argwhere(prediction == False), np.argwhere(ground_truth == True)).sum()
+
+    precision = tp / (tp + fp)
+    recall    = tp / (tp + fn)
+    accuracy  = (tp + tn) / (tp + tn + fp + fn)
+    f1 = 2 * (precision * recall) / (precision + recall)
     
     return precision, recall, f1, accuracy
 
@@ -33,5 +40,16 @@ def multiclass_accuracy(prediction, ground_truth):
     Returns:
     accuracy - ratio of accurate predictions to total samples
     '''
-    # TODO: Implement computing accuracy
-    return 0
+    accuracies = []
+    num_classes = np.unique(ground_truth)
+
+    for i in num_classes:
+        tp = np.isin(np.argwhere(prediction == i),  np.argwhere(ground_truth == i)).sum()
+        tn = np.isin(np.argwhere(prediction != i), np.argwhere(ground_truth != i)).sum()
+        fp = np.isin(np.argwhere(prediction == i),  np.argwhere(ground_truth != i)).sum()
+        fn = np.isin(np.argwhere(prediction != i), np.argwhere(ground_truth == i)).sum()
+
+        accuracy  = (tp + tn) / (tp + tn + fp + fn)
+
+        accuracies.append(accuracy)
+    return np.mean(accuracies)

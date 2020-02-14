@@ -1,1 +1,11 @@
 .DS_Store
+.vscode/settings.json
+assignments/assignment1/__pycache__/dataset.cpython-37.pyc
+assignments/assignment1/__pycache__/knn.cpython-37.pyc
+assignments/assignment1/__pycache__/metrics.cpython-37.pyc
+data/test_32x32.mat
+data/train_32x32.mat
+assignments/assignment1/__pycache__/gradient_check.cpython-37.pyc
+assignments/assignment1/__pycache__/linear_classifer.cpython-37.pyc
+assignments/assignment1/data/test_32x32.mat
+assignments/assignment1/data/train_32x32.mat
